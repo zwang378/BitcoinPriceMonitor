@@ -60,11 +60,6 @@ public class TabFragment1 extends Fragment {
         // Required empty public constructor
     }
 
-//    public TabFragment1(Context context) {
-//        connMgr = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-//
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,9 +70,6 @@ public class TabFragment1 extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // here you set what you want to do when user clicks your button,
-
-                // call AsynTask to perform network operation on separate thread
                 new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/transactions/btcusd/");
 
             }
@@ -87,7 +79,7 @@ public class TabFragment1 extends Fragment {
         if(isConnected()){
             Context context = getActivity();
             CharSequence text = "Loading history data...";
-            int duration = Toast.LENGTH_LONG;
+            int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
@@ -176,9 +168,6 @@ public class TabFragment1 extends Fragment {
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-
-            Log.d("zachary call GET", urls[0]);
-
             return GET(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -193,12 +182,6 @@ public class TabFragment1 extends Fragment {
             // creating labels
             ArrayList<String> labels = new ArrayList<>();
 
-            // Empty strings for tests
-            String msg = "";
-            String msg2 = "";
-            String msg3 = "";
-            String msg4 = "";
-
             Float sumPrice = 0f;
             Float avgPrice = 0f;
             Float minPrice = Float.MAX_VALUE;
@@ -206,16 +189,6 @@ public class TabFragment1 extends Fragment {
 
             try {
                 JSONArray jsonArray = new JSONArray(result);
-
-                Log.d("zachary jsonArray", jsonArray.toString());
-
-                msg = jsonArray.getJSONObject(0).toString();
-                msg2 = jsonArray.getJSONObject(0).getString("date");
-
-                Log.d("zachary msg", msg);
-                Log.d("zachary msg2", msg2);
-
-                Log.d("zachary len", "Received:" + " " + jsonArray.length());
 
                 for (int i = jsonArray.length() - 1; i >= 0; i--) {
                     String priceString = jsonArray.getJSONObject(i).getString("price");
@@ -227,23 +200,15 @@ public class TabFragment1 extends Fragment {
                     if (price > maxPrice) {
                         maxPrice = price;
                     }
-//                    Log.d("zachary price", "Received: " + price);
                     entries.add(new Entry(price, jsonArray.length() - 1 - i));
                     String date = jsonArray.getJSONObject(i).getString("date");
-//                    Log.d("zachary date", "Received: " + date);
 
                     long batch_date = Long.parseLong(date);
                     Date dt = new Date (batch_date * 1000);
 
-//                    Log.d("zachary dt", dt.toString());
-
                     SimpleDateFormat sfd = new SimpleDateFormat("HH:mm:ss");
 
                     labels.add(sfd.format(dt));
-
-//                    Log.d("zachary sfd", sfd.toString());
-
-//                    entries.add(new Entry(Float.parseFloat(date), Float.parseFloat(price)));
                 }
 
                 avgPrice = sumPrice / jsonArray.length();
@@ -252,45 +217,38 @@ public class TabFragment1 extends Fragment {
                 System.out.println(avgPrice);
 
             } catch (JSONException e) {
-                Log.e("zachary", "unexpected JSON exception", e);
+                Log.e("TabFragment1", "unexpected JSON exception", e);
             }
-
-            Log.d("zachary", "Received:" + "\n" + "\n" + msg + "\n" + "\n" + msg2 + "\n" + "\n" + msg3 + "\n" + "\n" + msg4);
 
             LineDataSet dataset = new LineDataSet(entries, "Data entries");
 
             LineData data = new LineData(labels, dataset);
-//            LineData data = new LineData(dataset);
+
             lineChart.setData(data); // set the data and list of lables into chart
-
-//            lineChart.setNoDataText("No chart data available currently");
-            lineChart.setNoDataTextDescription("No chart data available currently");
-
+            // remove legend
             lineChart.getLegend().setEnabled(false);
 
             lineChart.setDescription("Price info in the past 1 hr");
-//            lineChart.getDescription().setText("Price info in past 1 hr");
-
+            // make curve smooth
             dataset.setDrawCubic(true);
-//            //to make the smooth line as the graph is adrapt change so smooth curve
-//            dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-//            //to enable the cubic density : if 1 then it will be sharp curve
-//            dataset.setCubicIntensity(0.5f);
-
             //to remove the cricle from the graph
             dataset.setDrawCircles(false);
+            // set line color
             dataset.setColor(Color.rgb(0, 255, 0));
+
             dataset.setDrawFilled(true);
-//            dataset.setFillColor(Color.rgb(220, 241, 229));
+
             dataset.setFillColor(Color.rgb(0, 200, 0));
-
+            // to make the swipe between tabs smooth
             lineChart.setDragEnabled(false);
+            // remove two lines showing the touching position
             lineChart.getData().setHighlightEnabled(false);
-
+            // reset the zoom scale
             lineChart.fitScreen();
+            // zoom in
             lineChart.zoom(0f, minPrice/1000f, 0f, minPrice);
-
-            lineChart.invalidate(); // refresh
+            // refresh
+            lineChart.invalidate();
         }
     }
 
