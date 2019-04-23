@@ -70,26 +70,13 @@ public class TabFragment1 extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkConnection();
                 new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/transactions/btcusd/");
 
             }
         });
 
-        // check if you are connected or not
-        if(isConnected()){
-            Context context = getActivity();
-            CharSequence text = "Loading history data...";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
-        else{
-            Context context = getActivity();
-            CharSequence text = "You are NOT conncted";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
+        checkConnection();
 
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/transactions/btcusd/");
@@ -156,13 +143,29 @@ public class TabFragment1 extends Fragment {
 
     }
 
-    public boolean isConnected(){
+    private boolean isConnected(){
         ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
             return true;
         else
             return false;
+    }
+
+    private void checkConnection() {
+        if(isConnected()){
+            Context context = getActivity();
+            CharSequence text = "Loading history data...";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else {
+            Context context = getActivity();
+            CharSequence text = "You are NOT conncted";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
