@@ -5,28 +5,23 @@
     build-mode="COLD"
     density="420dpi"
     format="10"
-    ir-eligibility="COMPATIBLE"
     plugin-version="3.4.0"
-    timestamp="1556006318786"
+    timestamp="1556007192848"
     token="6046934020138073418"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="225" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="10" />
+        duration="0" />
     <task
         name="verifier"
-        duration="2" />
-
-    <artifact
-        location="/Users/eric/AndroidStudioProjects/BitcoinPriceMonitor/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
-        type="SPLIT" />
+        duration="0" />
 
     <build
         build-mode="FULL"
@@ -81,5 +76,9 @@
             location="/Users/eric/AndroidStudioProjects/BitcoinPriceMonitor/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
             type="SPLIT" />
     </build>
+    <build
+        build-mode="COLD"
+        timestamp="1556007192848"
+        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>
