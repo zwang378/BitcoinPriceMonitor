@@ -27,7 +27,7 @@ Tab 3 (Asks) function(s)
 Screenshots
 ---------------
 
-Please see below to check out the screenshots!
+Please see below to check out the animations!
 
 <p float="left">
   <img src="/sample/swipe.gif?raw=true" width="200px">
