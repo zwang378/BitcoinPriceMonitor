@@ -70,6 +70,12 @@ public class TabFragment1 extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Context context = getActivity();
+                CharSequence text = "Refreshing history data...";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
                 checkConnection();
                 new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/transactions/btcusd/");
 
@@ -154,17 +160,9 @@ public class TabFragment1 extends Fragment {
 
     private void checkConnection() {
         if(isConnected()){
-            Context context = getActivity();
-            CharSequence text = "Loading history data...";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Log.d("TabFragment1", "Connected");
         } else {
-            Context context = getActivity();
-            CharSequence text = "You are NOT conncted";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Log.d("TabFragment1", "NOT connected");
         }
     }
 
