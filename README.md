@@ -30,8 +30,8 @@ Screenshots
 Please see below to check out the screenshots!
 
 <p float="left">
-  <img src="https://i.imgur.com/sqkjGEn.gif" width="200" />
-  <img src="https://i.imgur.com/3TKmjcf.gif" width="200" />
-  <img src="https://i.imgur.com/PRFvGPE.gif" width="200" /> 
-  <img src="https://i.imgur.com/9mOClVi.gif" width="200" />
+  <img src="/sample/swipe.gif?raw=true" width="200px">
+  <img src="/sample/history.gif?raw=true" width="200px">
+  <img src="/sample/bids.gif?raw=true" width="200px">
+  <img src="/sample/asks.gif?raw=true" width="200px">
 </p>
