@@ -71,6 +71,12 @@ public class TabFragment2 extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Context context = getActivity();
+                CharSequence text = "Refreshing bids data...";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
                 fetchUpdatedData();
             }
         });
@@ -142,17 +148,9 @@ public class TabFragment2 extends Fragment {
 
     private void checkConnection() {
         if(isConnected()){
-            Context context = getActivity();
-            CharSequence text = "Loading history data...";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Log.d("TabFragment2", "Connected");
         } else {
-            Context context = getActivity();
-            CharSequence text = "You are NOT conncted";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Log.d("TabFragment2", "NOT connected");
         }
     }
 
