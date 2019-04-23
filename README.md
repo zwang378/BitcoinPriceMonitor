@@ -1,12 +1,12 @@
 Bitcoin Price Monitor
 =============================
 
-A simple green app shows important information only. You can see the Bitcoin price trending, bids, and asks by swiping left and right!
+A simple green app shows important Bitcoin information only. You can see the Bitcoin price trending, bids, and asks by swiping left and right!
 
 Introduction
 ------------
 
-This app is based on Bitstamp API, so you can find the same info on Bitstamp website (https://www.bitstamp.net/).
+This app is based on Bitstamp API, so you can find the same Bitcoin information on Bitstamp website (https://www.bitstamp.net/).
 
 Tab 1 (History) function(s)
 ---------------
