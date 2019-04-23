@@ -1,0 +1,4 @@
+#Tue Apr 23 00:57:20 PDT 2019
+base.0=/Users/eric/AndroidStudioProjects/BitcoinPriceMonitor/app/build/intermediates/transforms/dexMerger/debug/6
+path.0=classes.dex
+renamed.0=classes.dex

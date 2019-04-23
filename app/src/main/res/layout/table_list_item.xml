@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:text="Price"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAmount"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:gravity="right"
+        android:text="Amount"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtTotal"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:gravity="right"
+        android:text="Total"
+        android:textSize="18sp" />
+
+</LinearLayout>
