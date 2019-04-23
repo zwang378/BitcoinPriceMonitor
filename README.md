@@ -31,7 +31,7 @@ Please see below to check out the screenshots!
 
 <p float="left">
   <img src="https://i.imgur.com/sqkjGEn.gif" width="200" />
-  <img src="https://i.imgur.com/snI7KAG.gif" width="200" />
+  <img src="https://i.imgur.com/3TKmjcf.gif" width="200" />
   <img src="https://i.imgur.com/PRFvGPE.gif" width="200" /> 
   <img src="https://i.imgur.com/9mOClVi.gif" width="200" />
 </p>
