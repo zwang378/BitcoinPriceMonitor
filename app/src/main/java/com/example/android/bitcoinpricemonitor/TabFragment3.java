@@ -59,18 +59,11 @@ public class TabFragment3 extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.tab_fragment3, container, false);
-
-//        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerViewDeliveryProductList);
-//        TableViewAdapter adapter = new TableViewAdapter(transactionList);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(adapter);
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
@@ -78,9 +71,6 @@ public class TabFragment3 extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
                 fetchUpdatedData();
             }
         });
@@ -90,21 +80,7 @@ public class TabFragment3 extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        // check if you are connected or not
-        if(isConnected()){
-            Context context = getActivity();
-            CharSequence text = "Loading asks data...";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
-        else{
-            Context context = getActivity();
-            CharSequence text = "You are NOT conncted";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
+        checkConnection();
 
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/order_book/btcusd/");
@@ -138,8 +114,6 @@ public class TabFragment3 extends Fragment {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        Log.d("zachary GET result", result);
-
         return result;
     }
 
@@ -152,10 +126,7 @@ public class TabFragment3 extends Fragment {
 
         inputStream.close();
 
-        Log.d("zachary convert", result);
-
         return result;
-
     }
 
     public boolean isConnected(){
@@ -167,26 +138,23 @@ public class TabFragment3 extends Fragment {
             return false;
     }
 
-    public void fetchUpdatedData() {
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
-        // getHomeTimeline is an example endpoint.
-//        client.getHomeTimeline(new JsonHttpResponseHandler() {
-//            public void onSuccess(JSONArray json) {
-//                // Remember to CLEAR OUT old items before appending in the new ones
-//                adapter.clear();
-//                // ...the data has come back, add new items to your adapter...
-//                adapter.addAll(...);
-//                // Now we call setRefreshing(false) to signal refresh has finished
-//                swipeContainer.setRefreshing(false);
-//            }
-//
-//            public void onFailure(Throwable e) {
-//                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
-//            }
-//        });
+    private void checkConnection() {
+        if(isConnected()){
+            Context context = getActivity();
+            CharSequence text = "Loading history data...";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else {
+            Context context = getActivity();
+            CharSequence text = "You are NOT conncted";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
 
-        // call AsynTask to perform network operation on separate thread
+    public void fetchUpdatedData() {
         new HttpAsyncTask().execute("https://www.bitstamp.net/api/v2/order_book/btcusd/");
     }
 
@@ -199,38 +167,33 @@ public class TabFragment3 extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-//            List<Data> data = new ArrayList<>();
             List<TransactionModel> data = new ArrayList<>();
 
             try {
                 JSONObject json = new JSONObject(result);
                 JSONArray asks = json.getJSONArray("asks");
-                Log.d("zachary msg", "asks get data");
-                Log.d("zachary msg", "length: " + asks.length());
 
                 for (int i = 0; i < asks.length(); i++) {
-//                    data.add(new Data(asks.getJSONArray(i).getString(0), asks.getJSONArray(i).getString(1), R.drawable.bid20));
                     int tempPrice = asks.getJSONArray(i).getInt(0);
                     double tempAmount = asks.getJSONArray(i).getDouble(1);
                     double tempAmountRoundOff = Math.round(tempAmount * 100000000.0) / 100000000.0;
                     double tempValue = tempPrice * tempAmount;
                     double tempValueRoundOff = Math.round(tempValue * 100.0) / 100.0;
                     data.add(new TransactionModel(tempPrice, tempAmountRoundOff, tempValueRoundOff));
-//                    Log.d("add data", asks.getJSONArray(i).getString(0));
                 }
 
             } catch (JSONException e) {
-                Log.e("zachary", "unexpected JSON exception", e);
+                Log.e("TabFragment3", "unexpected JSON exception", e);
             }
 
             if (!swipeContainer.isRefreshing()) {
                 initRecyclerView(data);
             } else {
-                // Remember to CLEAR OUT old items before appending in the new ones
+                // clear out old items before appending in the new ones
                 adapter.clear();
-                // ...the data has come back, add new items to your adapter...
+                // data has come back, add new items to your adapter...
                 adapter.addAll(data);
-                // Now we call setRefreshing(false) to signal refresh has finished
+                // call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
             }
         }
