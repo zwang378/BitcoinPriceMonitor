@@ -24,7 +24,7 @@ Tab 3 (Asks) function(s)
 
 1. Swipe down so you can update the data
 
-Screenshots
+Animations
 ---------------
 
 Please see below to check out the animations!
