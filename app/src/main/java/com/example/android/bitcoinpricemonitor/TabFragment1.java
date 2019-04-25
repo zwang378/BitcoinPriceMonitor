@@ -107,17 +107,6 @@ public class TabFragment1 extends Fragment {
 
             inputStream = urlConnection.getInputStream();
 
-//            InputStreamReader isw = new InputStreamReader(in);
-//
-//            // create HttpClient
-//            HttpClient httpclient = new DefaultHttpClient();
-//
-//            // make GET request to the given URL
-//            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
-//
-//            // receive response as inputStream
-//            inputStream = httpResponse.getEntity().getContent();
-
             // convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
@@ -128,8 +117,6 @@ public class TabFragment1 extends Fragment {
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-
-        Log.d("zachary GET result", result);
 
         return result;
     }
@@ -143,10 +130,7 @@ public class TabFragment1 extends Fragment {
 
         inputStream.close();
 
-        Log.d("zachary convert", result);
-
         return result;
-
     }
 
     private boolean isConnected(){
