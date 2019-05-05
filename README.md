@@ -1,4 +1,4 @@
-Bitcoin Price Monitor
+Bitcoin Price Monitor (Android)
 =============================
 
 A simple green app shows important Bitcoin information only. You can see the Bitcoin price trending, bids, and asks by swiping left and right!
